@@ -15,6 +15,6 @@ public class MessageService {
         if (!MessageValidator.isValidMessage(message)) {
             throw new MessageFormatException("Message size is wrong. Message must be bigger 50 char and less 500 chars.");
         }
-        dbProducer.send(message);
+//        dbProducer.send(message);
     }
 }
