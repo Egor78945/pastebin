@@ -3,6 +3,7 @@ package org.pastebin.application.api_server.controllers;
 import lombok.RequiredArgsConstructor;
 import org.pastebin.application.api_server.annotations.MessageControllerExceptionHandler;
 import org.pastebin.application.api_server.exceptions.MessageFormatException;
+import org.pastebin.application.api_server.exceptions.RequestCancelledException;
 import org.pastebin.application.api_server.models.MessageRequestBody;
 import org.pastebin.application.api_server.services.MessageService;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,12 @@ public class MessageController {
 
     @PostMapping("/post")
     public ResponseEntity<String> postMessage(@RequestBody MessageRequestBody requestBody) throws MessageFormatException {
-        messageService.sendMessage(requestBody.getMessage());
-        return ResponseEntity.ok("Message has been posted.");
+        Long messageId = messageService.postMessage(requestBody.getMessage());
+        return ResponseEntity.ok(String.format("Ваша персональная ссылка на опубликованное сообщение: %s", messageService.buildPersonalReference(messageId)));
+    }
+
+    @GetMapping
+    public ResponseEntity<Integer> getMessage(@RequestParam("id") Long id) throws RequestCancelledException {
+        return ResponseEntity.ok(messageService.getMessageHash(id));
     }
 }

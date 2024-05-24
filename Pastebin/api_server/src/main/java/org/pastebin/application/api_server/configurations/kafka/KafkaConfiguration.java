@@ -14,7 +14,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-
+//@Configuration
 public class KafkaConfiguration {
     private final String KAFKA_TOPIC;
     private final String KAFKA_BOOTSTRAP;
@@ -25,7 +25,7 @@ public class KafkaConfiguration {
     }
 
 
-
+//    @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> properties = new HashMap<>();
 
@@ -39,12 +39,13 @@ public class KafkaConfiguration {
         return producerFactory;
     }
 
-
+//    @Bean
     public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
     }
 
 
+//    @Bean
     public NewTopic apiDbTopic() {
         return TopicBuilder
                 .name(KAFKA_TOPIC)

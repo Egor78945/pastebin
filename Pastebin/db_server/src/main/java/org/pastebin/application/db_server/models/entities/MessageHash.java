@@ -16,9 +16,9 @@ public class MessageHash {
     @Column(name = "id")
     private Long id;
     @Column(name = "hash")
-    private String hash;
+    private Integer hash;
 
-    public MessageHash(String hash) {
+    public MessageHash(Integer hash) {
         this.hash = hash;
     }
 }

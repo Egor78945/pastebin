@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice(annotations = DatabaseControllerExceptionHandler.class)
 public class DatabaseControllerAdvice {
     @ExceptionHandler(RequestCancelledException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> requestCancelledExceptionHandler() {
-        return new ResponseEntity<>("404", HttpStatus.NOT_FOUND);
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Integer> requestCancelledExceptionHandler() {
+        return new ResponseEntity<>(0, HttpStatus.OK);
     }
 }

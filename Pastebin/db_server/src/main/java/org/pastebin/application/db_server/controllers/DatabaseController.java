@@ -18,14 +18,13 @@ public class DatabaseController {
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.OK)
-    public String postMessageHash(@RequestParam("hash") String messageHash) {
-        messageHashService.save(new MessageHash(messageHash));
-        return messageHash;
+    public Long postMessageHash(@RequestParam("hash") Integer messageHash) {
+        return messageHashService.save(new MessageHash(messageHash));
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public String getMessageHashById(@RequestParam("id") Long id) throws RequestCancelledException {
+    public Integer getMessageHashById(@RequestParam("id") Long id) throws RequestCancelledException {
         return messageHashService.getById(id).getHash();
     }
 

@@ -13,8 +13,8 @@ public class MessageHashService {
     private final MessageHashRepository messageHashRepository;
 
     @Transactional
-    public void save(MessageHash messageHash) {
-        messageHashRepository.save(messageHash);
+    public Long save(MessageHash messageHash) {
+        return messageHashRepository.save(messageHash).getId();
     }
 
     @Transactional
