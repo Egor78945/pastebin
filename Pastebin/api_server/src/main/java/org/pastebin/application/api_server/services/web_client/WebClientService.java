@@ -7,10 +7,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 @RequiredArgsConstructor
 public class WebClientService {
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     public <T> T getRequest(String url, Class<T> resultClass) {
-        return webClient
+        return webClientBuilder
+                .build()
                 .get()
                 .uri(url)
                 .retrieve()
@@ -19,7 +20,8 @@ public class WebClientService {
     }
 
     public <T> T postRequest(String url, Class<T> resultClass) {
-        return webClient
+        return webClientBuilder
+                .build()
                 .post()
                 .uri(url)
                 .retrieve()

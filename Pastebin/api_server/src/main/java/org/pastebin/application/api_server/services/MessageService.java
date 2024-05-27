@@ -23,7 +23,7 @@ public class MessageService {
     }
 
     public Integer getMessageHash(Long id) throws RequestCancelledException {
-        Integer hash = webClientService.getRequest(String.format("http://localhost:8081/database?id=%s", id), Integer.class);
+        Integer hash = webClientService.getRequest(String.format("http://db_server/database?id=%s", id), Integer.class);
         if (hash != 0) {
             return hash;
         }
