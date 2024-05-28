@@ -29,6 +29,15 @@ public class WebClientService {
                 .block();
     }
 
+    public <T> T deleteRequest(String url, Class<T> resultClass) {
+        return webClientBuilder
+                .delete()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(resultClass)
+                .block();
+    }
+
     public String getHost(String serverName) {
         return eurekaClient
                 .getApplication(serverName)

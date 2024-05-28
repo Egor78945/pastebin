@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface MessageHashRepository extends JpaRepository<MessageHash, Long> {
     void removeMessageHashById(Long id);
+    MessageHash findMessageHashById(Long id);
 }

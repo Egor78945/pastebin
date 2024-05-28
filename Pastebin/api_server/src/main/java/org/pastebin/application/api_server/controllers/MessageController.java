@@ -19,11 +19,16 @@ public class MessageController {
     @PostMapping("/post")
     public ResponseEntity<String> postMessage(@RequestBody MessageRequestBody requestBody) throws MessageFormatException {
         Long messageId = messageService.postMessage(requestBody.getMessage());
-        return ResponseEntity.ok(String.format("Ваша персональная ссылка на опубликованное сообщение: %s", messageService.buildPersonalReference(messageId)));
+        return ResponseEntity.ok(String.format("Your personal link to published message: %s", messageService.buildPersonalReference(messageId)));
     }
 
     @GetMapping
     public ResponseEntity<Integer> getMessage(@RequestParam("id") Long id) throws RequestCancelledException {
         return ResponseEntity.ok(messageService.getMessageHash(id));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteMessage(@RequestParam("id") Long id) throws RequestCancelledException {
+        return ResponseEntity.ok(String.format("Message with id %s has been deleted.", messageService.deleteMessage(id)));
     }
 }

@@ -36,4 +36,14 @@ public class MessageService {
     public String buildPersonalReference(Long id) {
         return String.format("http://localhost:8080/message?id=%s", id);
     }
+
+    public Long deleteMessage(Long id) throws RequestCancelledException {
+        String host = webClientService.getHost("db_server");
+        int port = webClientService.getPort("db_server");
+        Integer check = webClientService.getRequest(String.format("http://%s:%s/database?id=%s", host, port, id), Integer.class);
+        if (check != 0) {
+            return webClientService.deleteRequest(String.format("http://%s:%s/database/delete?id=%s", host, port, id), Long.class);
+        }
+        throw new RequestCancelledException(String.format("Message with id %s is not found.", id));
+    }
 }
