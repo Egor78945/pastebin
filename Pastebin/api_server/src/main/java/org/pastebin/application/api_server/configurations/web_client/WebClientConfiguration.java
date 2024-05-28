@@ -9,9 +9,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfiguration {
     @Bean
     @LoadBalanced
-    public WebClient.Builder webClient() {
+    public WebClient webClient() {
         return WebClient
-                .builder();
+                .builder()
+                .build();
     }
 
 }
