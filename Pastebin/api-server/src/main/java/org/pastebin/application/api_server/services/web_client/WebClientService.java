@@ -8,11 +8,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 @RequiredArgsConstructor
 public class WebClientService {
-    private final WebClient webClientBuilder;
+    private final WebClient.Builder webClientBuilder;
     private final EurekaClient eurekaClient;
 
     public <T> T getRequest(String url, Class<T> resultClass) {
         return webClientBuilder
+                .build()
                 .get()
                 .uri(url)
                 .retrieve()
@@ -22,6 +23,7 @@ public class WebClientService {
 
     public <T> T postRequest(String url, Class<T> resultClass) {
         return webClientBuilder
+                .build()
                 .post()
                 .uri(url)
                 .retrieve()
@@ -31,6 +33,7 @@ public class WebClientService {
 
     public <T> T deleteRequest(String url, Class<T> resultClass) {
         return webClientBuilder
+                .build()
                 .delete()
                 .uri(url)
                 .retrieve()
@@ -42,7 +45,7 @@ public class WebClientService {
         return eurekaClient
                 .getApplication(serverName)
                 .getInstances()
-                .get(0)
+                .getFirst()
                 .getHostName();
     }
 
@@ -50,7 +53,7 @@ public class WebClientService {
         return eurekaClient
                 .getApplication(serverName)
                 .getInstances()
-                .get(0)
+                .getFirst()
                 .getPort();
     }
 }

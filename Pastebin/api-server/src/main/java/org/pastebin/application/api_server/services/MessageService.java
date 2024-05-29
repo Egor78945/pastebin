@@ -15,18 +15,14 @@ public class MessageService {
 
     public Long postMessage(String message) throws MessageFormatException {
         if (MessageValidator.isValidMessage(message)) {
-            String host = webClientService.getHost("db_server");
-            int port = webClientService.getPort("db_server");
-            return webClientService.postRequest(String.format("http://%s:%s/database/save?hash=%s", host, port, message.hashCode()), Long.class);
+            return webClientService.postRequest(String.format("http://db-server/database/save?hash=%s", message.hashCode()), Long.class);
         }
         throw new MessageFormatException("Message size is wrong. Message must be bigger 50 char and less 500 chars.");
 //        dbProducer.send(message);
     }
 
     public Integer getMessageHash(Long id) throws RequestCancelledException {
-        String host = webClientService.getHost("db_server");
-        int port = webClientService.getPort("db_server");
-        Integer hash = webClientService.getRequest(String.format("http://%s:%s/database?id=%s", host, port, id), Integer.class);
+        Integer hash = webClientService.getRequest(String.format("http://db-server/database?id=%s", id), Integer.class);
         if (hash != 0) {
             return hash;
         }
@@ -38,11 +34,9 @@ public class MessageService {
     }
 
     public Long deleteMessage(Long id) throws RequestCancelledException {
-        String host = webClientService.getHost("db_server");
-        int port = webClientService.getPort("db_server");
-        Integer check = webClientService.getRequest(String.format("http://%s:%s/database?id=%s", host, port, id), Integer.class);
+        Integer check = webClientService.getRequest(String.format("http://db-server/database?id=%s", id), Integer.class);
         if (check != 0) {
-            return webClientService.deleteRequest(String.format("http://%s:%s/database/delete?id=%s", host, port, id), Long.class);
+            return webClientService.deleteRequest(String.format("http://db-server/database/delete?id=%s", id), Long.class);
         }
         throw new RequestCancelledException(String.format("Message with id %s is not found.", id));
     }

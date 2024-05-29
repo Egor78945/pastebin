@@ -14,9 +14,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules>
-        <module>api_server</module>
-        <module>db_server</module>
-        <module>discovery_server</module>
+        <module>api-server</module>
+        <module>db-server</module>
+        <module>discovery-server</module>
     </modules>
     <dependencies>
         <dependency>
