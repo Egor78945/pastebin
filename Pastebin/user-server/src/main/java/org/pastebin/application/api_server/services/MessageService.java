@@ -5,6 +5,7 @@ import org.pastebin.application.api_server.exceptions.MessageFormatException;
 import org.pastebin.application.api_server.exceptions.RequestCancelledException;
 import org.pastebin.application.api_server.services.web_client.WebClientService;
 import org.pastebin.application.api_server.utils.validators.MessageValidator;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class MessageService {
     //    private final DBProducer dbProducer;
     private final WebClientService webClientService;
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final String HASH_KEY = "message";
 
     public Long postMessage(String message) throws MessageFormatException {
         if (MessageValidator.isValidMessage(message)) {
@@ -22,11 +25,15 @@ public class MessageService {
     }
 
     public Integer getMessageHash(Long id) throws RequestCancelledException {
-        Integer hash = webClientService.getRequest(String.format("http://db-server/database?id=%s", id), Integer.class);
-        if (hash != 0) {
-            return hash;
+        Integer hash = (Integer) redisTemplate.opsForHash().get(HASH_KEY, id.toString());
+        if (hash == null) {
+            hash = webClientService.getRequest(String.format("http://db-server/database?id=%s", id), Integer.class);
+            if (hash == 0) {
+                throw new RequestCancelledException(String.format("Message with id %s is not found.", id));
+            }
+            redisTemplate.opsForHash().put(HASH_KEY, id.toString(), hash);
         }
-        throw new RequestCancelledException(String.format("Message with id %s is not found.", id));
+        return hash;
     }
 
     public String buildPersonalReference(Long id) {

@@ -11,6 +11,7 @@
     <groupId>org.pastebin.application</groupId>
     <artifactId>user-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>user_server</name>
     <description>user_server</description>
     <properties>
