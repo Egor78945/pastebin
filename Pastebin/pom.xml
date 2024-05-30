@@ -14,9 +14,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules>
-        <module>api-server</module>
+        <module>user-server</module>
         <module>db-server</module>
         <module>discovery-server</module>
+        <module>api-gateway-server</module>
     </modules>
     <dependencies>
         <dependency>
