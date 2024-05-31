@@ -1,0 +1,70 @@
+version: '3.7'
+
+services:
+
+  #Postgresql connection
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_DB: pastebin
+      POSTGRES_USER: bestuser
+      POSTGRES_PASSWORD: bestuser
+    volumes:
+      - D:\postgres_datapart:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  #Eureka discovery server
+  discovery-server:
+    build: /discovery-server/.
+    container_name: discovery-server
+    pull_policy: always
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  #Api gateway
+  api-gateway-server:
+    build: /api-gateway-server/.
+    container_name: api-gateway-server
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+
+  #Db server
+  db-server:
+    build: /db-server/.
+    container_name: db-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/pastebin
+    depends_on:
+      - postgres
+      - discovery-server
+      - api-gateway-server
+
+  #User server
+  user-server:
+    build: /user-server/.
+    container_name: user-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+      - api-gateway-server
+
+#  Redis
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PORT=6379
+      - REDIS_DATABASES=1
+
