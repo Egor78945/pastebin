@@ -57,6 +57,7 @@ services:
     depends_on:
       - discovery-server
       - api-gateway-server
+      - db-server
 
 #  Redis
   redis:
