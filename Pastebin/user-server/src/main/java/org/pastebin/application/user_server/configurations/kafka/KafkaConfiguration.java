@@ -14,11 +14,13 @@ import java.util.Map;
 
 //@Configuration
 public class KafkaConfiguration {
-    private final String KAFKA_TOPIC;
+    private final String KAFKA_SAVE_TOPIC;
+    private final String KAFKA_GET_TOPIC;
     private final String KAFKA_BOOTSTRAP;
 
-    public KafkaConfiguration(@Value("${kafka.topic}") String KAFKA_TOPIC, @Value("${kafka.bootstrap}") String KAFKA_BOOTSTRAP) {
-        this.KAFKA_TOPIC = KAFKA_TOPIC;
+    public KafkaConfiguration(@Value("${kafka.topic.save}") String KAFKA_SAVE_TOPIC, @Value("${kafka.topic.get}") String KAFKA_GET_TOPIC, @Value("${kafka.bootstrap}") String KAFKA_BOOTSTRAP) {
+        this.KAFKA_SAVE_TOPIC = KAFKA_SAVE_TOPIC;
+        this.KAFKA_GET_TOPIC = KAFKA_GET_TOPIC;
         this.KAFKA_BOOTSTRAP = KAFKA_BOOTSTRAP;
     }
 
@@ -44,9 +46,9 @@ public class KafkaConfiguration {
 
 
 //    @Bean
-    public NewTopic apiDbTopic() {
+    public NewTopic saveTopic() {
         return TopicBuilder
-                .name(KAFKA_TOPIC)
+                .name(KAFKA_SAVE_TOPIC)
                 .build();
     }
 }

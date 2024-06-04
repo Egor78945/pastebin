@@ -48,6 +48,15 @@ services:
       - discovery-server
       - api-gateway-server
 
+  #Message db server
+  message-db-server:
+    build: /message-db-server/.
+    container_name: message-db-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8081:8081"
+
   #User server
   user-server:
     build: /user-server/.
@@ -78,6 +87,7 @@ services:
       - MINIO_ROOT_PASSWORD=useruser
     command: server ~/minio --console-address :9090
     ports:
+      - "9000:9000"
       - "9090:9090"
     volumes:
       - D:\minio_datapart:/var/lib/minio/data

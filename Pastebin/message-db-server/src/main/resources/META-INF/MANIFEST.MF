@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: org.pastebin.application.message_db_server.MessageDbServerAp
+ plication
+
