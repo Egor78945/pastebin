@@ -3,26 +3,28 @@ package org.pastebin.application.user_server.services;
 import lombok.RequiredArgsConstructor;
 import org.pastebin.application.user_server.exceptions.MessageFormatException;
 import org.pastebin.application.user_server.exceptions.RequestCancelledException;
+import org.pastebin.application.user_server.models.MessageTransactionModel;
+import org.pastebin.application.user_server.services.kafka.producers.MessageProducer;
 import org.pastebin.application.user_server.services.redis.RedisService;
 import org.pastebin.application.user_server.services.web_client.WebClientService;
 import org.pastebin.application.user_server.utils.validators.MessageValidator;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class MessageService {
-    //    private final DBProducer dbProducer;
+        private final MessageProducer messageProducer;
     private final WebClientService webClientService;
     private final RedisService redisService;
     private final String HASH_KEY = "message";
 
     public Long postMessage(String message) throws MessageFormatException {
         if (MessageValidator.isValidMessage(message)) {
-            return webClientService.postRequest(String.format("http://db-server/database/save?hash=%s", message.hashCode()), Long.class);
+            Long hashId = webClientService.postRequest(String.format("http://db-server/database/save?hash=%s", message.hashCode()), Long.class);
+            messageProducer.sendToSave(new MessageTransactionModel(message, message.hashCode()));
+            return hashId;
         }
         throw new MessageFormatException("Message size is wrong. Message must be bigger 50 char and less 500 chars.");
-//        dbProducer.send(message);
     }
 
     public Integer getMessageHash(Long id) throws RequestCancelledException {
