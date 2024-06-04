@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
     private final MessageService messageService;
 
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity<String> save(@RequestParam("hash") String hash, @RequestParam("message") String message) throws Exception {
         return ResponseEntity.ok(messageService.save(hash, message));
     }

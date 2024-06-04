@@ -54,8 +54,12 @@ services:
     container_name: message-db-server
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-    ports:
-      - "8081:8081"
+    depends_on:
+      - discovery-server
+      - api-gateway-server
+      - db-server
+      - user-server
+      - minio
 
   #User server
   user-server:

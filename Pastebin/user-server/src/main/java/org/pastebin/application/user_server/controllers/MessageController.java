@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
     private final MessageService messageService;
 
-    @PostMapping("/post")
+    @PostMapping
     public ResponseEntity<String> postMessage(@RequestBody MessageRequestBody requestBody) throws MessageFormatException {
         Long messageId = messageService.postMessage(requestBody.getMessage());
         return ResponseEntity.ok(String.format("Your personal link to published message: %s", messageService.buildPersonalReference(messageId)));
