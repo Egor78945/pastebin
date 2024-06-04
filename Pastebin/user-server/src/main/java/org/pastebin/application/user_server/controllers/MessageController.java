@@ -23,8 +23,8 @@ public class MessageController {
     }
 
     @GetMapping
-    public ResponseEntity<Integer> getMessage(@RequestParam("id") Long id) throws RequestCancelledException {
-        return ResponseEntity.ok(messageService.getMessageHash(id));
+    public ResponseEntity<String> getMessage(@RequestParam("id") Long id) throws RequestCancelledException {
+        return ResponseEntity.ok(messageService.getMessage(id));
     }
 
     @DeleteMapping

@@ -37,6 +37,15 @@ public class MessageService {
         return hash;
     }
 
+    public String getMessage(Long id) throws RequestCancelledException {
+        Integer hash = getMessageHash(id);
+        String message = webClientService.getRequest(String.format("http://message-db-server/minio?hash=%s", hash), String.class);
+        if (message == null) {
+            throw new RequestCancelledException(String.format("Message with id %s is not found.", id));
+        }
+        return message;
+    }
+
     public String buildPersonalReference(Long id) {
         return String.format("http://localhost:8080/message?id=%s", id);
     }
