@@ -26,22 +26,22 @@ public class MessageService {
     }
 
     public Integer getMessageHash(Long id) throws RequestCancelledException {
-        Integer hash = (Integer) redisService.get(HASH_KEY, id.toString());
-        if (hash == null) {
-            hash = webClientService.getRequest(String.format("http://db-server/database?id=%s", id), Integer.class);
-            if (hash == 0) {
-                throw new RequestCancelledException(String.format("Message with id %s is not found.", id));
-            }
-            redisService.save(HASH_KEY, id.toString(), hash);
+        Integer hash = webClientService.getRequest(String.format("http://db-server/database?id=%s", id), Integer.class);
+        if (hash == 0) {
+            throw new RequestCancelledException(String.format("Message with id %s is not found.", id));
         }
         return hash;
     }
 
     public String getMessage(Long id) throws RequestCancelledException {
-        Integer hash = getMessageHash(id);
-        String message = webClientService.getRequest(String.format("http://message-db-server/minio?hash=%s", hash), String.class);
+        String message = (String) redisService.get(HASH_KEY, id.toString());
         if (message == null) {
-            throw new RequestCancelledException(String.format("Message with id %s is not found.", id));
+            Integer hash = getMessageHash(id);
+            message = webClientService.getRequest(String.format("http://message-db-server/minio?hash=%s", hash), String.class);
+            if (message == null) {
+                throw new RequestCancelledException(String.format("Message with id %s is not found.", id));
+            }
+            redisService.save(HASH_KEY, id.toString(), message);
         }
         return message;
     }
