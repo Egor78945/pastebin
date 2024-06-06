@@ -2,7 +2,7 @@ package org.pastebin.application.message_db_server.services.minio;
 
 import io.minio.*;
 import lombok.RequiredArgsConstructor;
-import org.pastebin.application.message_db_server.configuration.MinIOProperties;
+import org.pastebin.application.message_db_server.configuration.minio.MinIOProperties;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;

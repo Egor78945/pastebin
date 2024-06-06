@@ -1,4 +1,4 @@
-package org.pastebin.application.message_db_server.configuration;
+package org.pastebin.application.message_db_server.configuration.minio;
 
 import io.minio.MinioClient;
 import org.springframework.context.annotation.Bean;

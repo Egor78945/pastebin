@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MessageService {
-        private final MessageProducer messageProducer;
+    private final MessageProducer messageProducer;
     private final WebClientService webClientService;
     private final RedisService redisService;
     private final String HASH_KEY = "message";
@@ -21,7 +21,7 @@ public class MessageService {
     public Long postMessage(String message) throws MessageFormatException {
         if (MessageValidator.isValidMessage(message)) {
             Long hashId = webClientService.postRequest(String.format("http://db-server/database/save?hash=%s", message.hashCode()), Long.class);
-            messageProducer.sendToSave(new MessageTransactionModel(message, message.hashCode()));
+            messageProducer.sendToSave(new MessageTransactionModel(message, String.valueOf(message.hashCode())));
             return hashId;
         }
         throw new MessageFormatException("Message size is wrong. Message must be bigger 50 char and less 500 chars.");

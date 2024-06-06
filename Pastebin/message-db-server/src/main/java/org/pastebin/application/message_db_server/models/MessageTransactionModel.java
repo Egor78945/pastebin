@@ -1,4 +1,4 @@
-package org.pastebin.application.user_server.models;
+package org.pastebin.application.message_db_server.models;
 
 import lombok.Data;
 

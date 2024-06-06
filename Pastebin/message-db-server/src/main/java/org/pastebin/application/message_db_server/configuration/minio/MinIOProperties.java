@@ -1,4 +1,4 @@
-package org.pastebin.application.message_db_server.configuration;
+package org.pastebin.application.message_db_server.configuration.minio;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,9 +13,9 @@ public class MinIOProperties {
     private final String SECRET_KEY;
 
     public MinIOProperties(@Value("${minio.bucket}") String bucket,
-                              @Value("${minio.url}") String url,
-                              @Value("${minio.access-key}") String accessKey,
-                              @Value("${minio.secret-key}") String secretKey) {
+                           @Value("${minio.url}") String url,
+                           @Value("${minio.access-key}") String accessKey,
+                           @Value("${minio.secret-key}") String secretKey) {
         this.BUCKET = bucket;
         this.URL = url;
         this.ACCESS_KEY = accessKey;

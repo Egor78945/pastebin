@@ -13,18 +13,8 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
     private final MessageService messageService;
 
-    @PostMapping
-    public ResponseEntity<String> save(@RequestParam("hash") String hash, @RequestParam("message") String message) throws Exception {
-        return ResponseEntity.ok(messageService.save(hash, message));
-    }
-
     @GetMapping
     public ResponseEntity<String> get(@RequestParam("hash") String hash) throws Exception {
         return ResponseEntity.ok(messageService.get(hash));
-    }
-
-    @DeleteMapping
-    public ResponseEntity<String> delete(@RequestParam("hash") String hash) throws Exception {
-        return ResponseEntity.ok(messageService.delete(hash));
     }
 }
