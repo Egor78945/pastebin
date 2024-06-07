@@ -53,11 +53,12 @@ public class MessageService {
     }
 
     public Long deleteMessage(Long id) throws RequestCancelledException {
-        Integer check = webClientService.getRequest(String.format("http://db-server/database?id=%s", id), Integer.class);
-        if (check != 0) {
+        Integer hash = webClientService.getRequest(String.format("http://db-server/database?id=%s", id), Integer.class);
+        if (hash != 0) {
             if (redisService.get(HASH_KEY, id.toString()) != null) {
                 redisService.delete(HASH_KEY, id.toString());
             }
+            messageProducer.sendToDelete(String.valueOf(hash));
             return webClientService.deleteRequest(String.format("http://db-server/database/delete?id=%s", id), Long.class);
         }
         throw new RequestCancelledException(String.format("Message with id %s is not found.", id));

@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class KafkaSaveListener {
+public class KafkaDeleteListener {
     private final MessageService messageService;
 
-    @KafkaListener(topics = "${kafka.topic.save}", groupId = "${kafka.groupid}", containerFactory = "saveListenerContainerFactory")
-    public void save(MessageTransactionModel message) {
+    @KafkaListener(topics = "${kafka.topic.delete}", groupId = "${kafka.groupid}", containerFactory = "deleteListenerContainerFactory")
+    public void save(String hash) {
         try {
-            messageService.save(message);
+            messageService.delete(hash);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

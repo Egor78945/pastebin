@@ -20,8 +20,7 @@ public class MessageService {
         return minIOService.get(hash);
     }
 
-    public String delete(String hash) throws Exception {
+    public void delete(String hash) throws Exception {
         minIOService.delete(hash);
-        return hash;
     }
 }

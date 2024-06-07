@@ -36,7 +36,7 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public ProducerFactory<String, MessageTransactionModel> producerFactory() {
+    public ProducerFactory<String, MessageTransactionModel> saveProducerFactory() {
         Map<String, Object> properties = new HashMap<>();
 
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -50,7 +50,26 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public KafkaTemplate<String, MessageTransactionModel> kafkaTemplate(ProducerFactory<String, MessageTransactionModel> producerFactory) {
+    public ProducerFactory<String, String> deleteProducerFactory() {
+        Map<String, Object> properties = new HashMap<>();
+
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BOOTSTRAP);
+
+        var producerFactory = new DefaultKafkaProducerFactory<String, String>(properties);
+        producerFactory.setValueSerializer(new StringSerializer());
+
+        return producerFactory;
+    }
+
+    @Bean
+    public KafkaTemplate<String, MessageTransactionModel> saveKafkaTemplate(ProducerFactory<String, MessageTransactionModel> producerFactory) {
+        return new KafkaTemplate<>(producerFactory);
+    }
+
+    @Bean
+    public KafkaTemplate<String, String> deleteKafkaTemplate(ProducerFactory<String, String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
     }
 

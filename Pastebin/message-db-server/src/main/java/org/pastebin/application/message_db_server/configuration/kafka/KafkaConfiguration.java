@@ -34,7 +34,7 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public ConsumerFactory<String, MessageTransactionModel> consumerFactory(ObjectMapper objectMapper) {
+    public ConsumerFactory<String, MessageTransactionModel> saveConsumerFactory(ObjectMapper objectMapper) {
         Map<String, Object> properties = new HashMap<>();
 
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -50,10 +50,34 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, MessageTransactionModel>> listenerContainerFactory(ConsumerFactory<String, MessageTransactionModel> consumerFactory) {
+    public ConsumerFactory<String, String> deleteConsumerFactory() {
+        Map<String, Object> properties = new HashMap<>();
+
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP);
+        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, AUTO_OFFSET_RESET);
+
+        var kafkaConsumerFactory = new DefaultKafkaConsumerFactory<String, String>(properties);
+        kafkaConsumerFactory.setValueDeserializer(new StringDeserializer());
+
+        return kafkaConsumerFactory;
+    }
+
+    @Bean
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, MessageTransactionModel>> saveListenerContainerFactory(ConsumerFactory<String, MessageTransactionModel> saveConsumerFactory) {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, MessageTransactionModel>();
 
-        factory.setConsumerFactory(consumerFactory);
+        factory.setConsumerFactory(saveConsumerFactory);
+
+        return factory;
+    }
+
+    @Bean
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> deleteListenerContainerFactory(ConsumerFactory<String, String> saveConsumerFactory) {
+        var factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+
+        factory.setConsumerFactory(saveConsumerFactory);
 
         return factory;
     }

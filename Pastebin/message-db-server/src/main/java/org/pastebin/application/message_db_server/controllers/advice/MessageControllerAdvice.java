@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice(annotations = MessageControllerExceptionHandler.class)
 public class MessageControllerAdvice {
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> exceptionHandler(Exception e) {
+    public ResponseEntity<String> exceptionHandler() {
         return ResponseEntity.ok(null);
     }
 }
