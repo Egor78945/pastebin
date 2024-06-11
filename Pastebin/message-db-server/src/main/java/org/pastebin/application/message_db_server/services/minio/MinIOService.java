@@ -13,13 +13,13 @@ public class MinIOService {
     private final MinioClient minioClient;
     private final MinIOProperties minIOProperties;
 
-    private void createBucket() throws Exception {
+    public void createBucket() throws Exception {
         if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(minIOProperties.getBUCKET()).build())) {
             minioClient.makeBucket(MakeBucketArgs.builder().bucket(minIOProperties.getBUCKET()).build());
         }
     }
 
-    public void save(String hash, InputStream message) throws Exception {
+    public void saveToBucket(String hash, InputStream message) throws Exception {
         createBucket();
         minioClient
                 .putObject(PutObjectArgs
@@ -30,7 +30,7 @@ public class MinIOService {
                         .build());
     }
 
-    public String get(String hash) throws Exception{
+    public String getFromBucket(String hash) throws Exception{
         return new String(minioClient
                 .getObject(GetObjectArgs
                         .builder()
@@ -40,7 +40,7 @@ public class MinIOService {
                 .readAllBytes());
     }
 
-    public void delete(String hash) throws Exception{
+    public void deleteFromBucket(String hash) throws Exception{
         minioClient
                 .removeObject(RemoveObjectArgs
                         .builder()

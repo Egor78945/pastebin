@@ -14,12 +14,12 @@ public class MessageProducerAspect {
     @After("execution(public void sendToSave(org.pastebin.application.user_server.models.MessageTransactionModel))")
     public void afterSendToSaveAdvice(JoinPoint joinPoint) {
         MessageTransactionModel messageTransactionModel = (MessageTransactionModel) joinPoint.getArgs()[0];
-        log.info(String.format("Message have been sent to save: %s", messageTransactionModel.getMessage()));
+        log.info(String.format("Message Producer: Message have been sent to save topic: %s", messageTransactionModel.getMessage()));
     }
 
     @After("execution(public void sendToDelete(java.lang.String))")
     public void afterSendToDeleteAdvice(JoinPoint joinPoint) {
         String messageHash = (String) joinPoint.getArgs()[0];
-        log.info(String.format("Message hash have been save to delete: %s", messageHash));
+        log.info(String.format("Message Producer: Message hash have been sent to delete topic: %s", messageHash));
     }
 }

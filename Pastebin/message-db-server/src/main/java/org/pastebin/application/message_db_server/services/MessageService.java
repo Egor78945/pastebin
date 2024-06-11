@@ -13,14 +13,14 @@ public class MessageService {
     private final MinIOService minIOService;
 
     public void save(MessageTransactionModel message) throws Exception {
-        minIOService.save(message.getMessageHash(), new ByteArrayInputStream(message.getMessage().getBytes()));
+        minIOService.saveToBucket(message.getMessageHash(), new ByteArrayInputStream(message.getMessage().getBytes()));
     }
 
     public String get(String hash) throws Exception {
-        return minIOService.get(hash);
+        return minIOService.getFromBucket(hash);
     }
 
     public void delete(String hash) throws Exception {
-        minIOService.delete(hash);
+        minIOService.deleteFromBucket(hash);
     }
 }
