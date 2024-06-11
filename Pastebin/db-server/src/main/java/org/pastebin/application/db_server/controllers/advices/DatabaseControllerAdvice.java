@@ -1,4 +1,4 @@
-package org.pastebin.application.db_server.controllers.controller_advices;
+package org.pastebin.application.db_server.controllers.advices;
 
 import lombok.extern.slf4j.Slf4j;
 import org.pastebin.application.db_server.annotations.DatabaseControllerExceptionHandler;
