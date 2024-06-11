@@ -3,6 +3,7 @@ package org.pastebin.application.db_server.services.aspects;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.pastebin.application.db_server.models.entities.MessageHash;
 import org.springframework.stereotype.Component;
@@ -18,8 +19,8 @@ public class MessageHashServiceAspect {
         log.info(String.format("Message Hash Service: Message with hash %s have been saved", messageHash.getHash()));
     }
 
-    @After("execution(public org.pastebin.application.db_server.models.entities.MessageHash getById(java.lang.Long))")
-    public void afterGetMessageHashByIdAdvice(JoinPoint joinPoint) {
+    @AfterReturning("execution(public org.pastebin.application.db_server.models.entities.MessageHash getById(java.lang.Long))")
+    public void afterReturningGetMessageHashByIdAdvice(JoinPoint joinPoint) {
         Long messageHashId = (Long) joinPoint.getArgs()[0];
         log.info(String.format("Message Hash Service: Message hash with id %s have been gotten", messageHashId));
     }

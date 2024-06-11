@@ -3,6 +3,7 @@ package org.pastebin.application.user_server.services.apects;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +19,8 @@ public class RedisServiceAspect {
         log.info(String.format("Redis(HASH_KEY=%s,KEY=%s): Object saved in redis: %s", HASH_KEY, KEY, value));
     }
 
-    @After("execution(public java.lang.Object get(java.lang.String, java.lang.String))")
-    public void afterGetAdvice(JoinPoint joinPoint) {
+    @AfterReturning("execution(public java.lang.Object get(java.lang.String, java.lang.String))")
+    public void afterReturningGetAdvice(JoinPoint joinPoint) {
         final String HASH_KEY = (String) joinPoint.getArgs()[0];
         final String KEY = (String) joinPoint.getArgs()[1];
         log.info(String.format("Redis(HASH_KEY=%s,KEY=%s): Object has been gotten", HASH_KEY, KEY));
