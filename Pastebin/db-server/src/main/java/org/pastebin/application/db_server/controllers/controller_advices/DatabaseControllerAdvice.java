@@ -15,7 +15,7 @@ public class DatabaseControllerAdvice {
     @ExceptionHandler(RequestCancelledException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Integer> requestCancelledExceptionHandler(Exception e) {
-        log.error(e.getMessage());
+        log.error(String.format("Database Controller: %s", e.getMessage()));
         return new ResponseEntity<>(0, HttpStatus.OK);
     }
 }
