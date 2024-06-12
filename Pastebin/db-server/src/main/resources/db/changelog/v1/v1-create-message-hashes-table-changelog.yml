@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: v1-1
+      author: egor
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: message_hashes
+      changes:
+        - createTable:
+            tableName: message_hashes
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                  autoIncrement: true
+              - column:
+                  name: hash
+                  type: int
