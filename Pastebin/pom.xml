@@ -18,6 +18,7 @@
         <module>db-server</module>
         <module>discovery-server</module>
         <module>api-gateway-server</module>
+        <module>message-db-server</module>
     </modules>
     <dependencies>
         <dependency>
