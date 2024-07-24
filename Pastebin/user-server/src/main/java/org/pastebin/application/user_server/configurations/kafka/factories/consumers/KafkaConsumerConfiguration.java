@@ -34,10 +34,6 @@ public class KafkaConsumerConfiguration {
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaDetails.getKAFKA_GROUP_ID());
         properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaDetails.getKAFKA_AUTO_OFFSET_RESET());
 
-        var kafkaConsumer = new KafkaConsumer<String, String>(properties);
-
-        kafkaConsumer.subscribe(List.of(kafkaDetails.getKAFKA_HASH_RESPONSE_TOPIC()));
-
-        return kafkaConsumer;
+        return new KafkaConsumer<>(properties);
     }
 }
