@@ -3,7 +3,6 @@ package org.pastebin.application.user_server.services.kafka.producers;
 import org.pastebin.application.user_server.configurations.kafka.KafkaDetails;
 import org.pastebin.application.user_server.models.MessageTransactionModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
