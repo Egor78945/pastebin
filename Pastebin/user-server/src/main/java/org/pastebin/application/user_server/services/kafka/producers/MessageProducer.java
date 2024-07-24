@@ -1,7 +1,8 @@
 package org.pastebin.application.user_server.services.kafka.producers;
 
+import org.pastebin.application.user_server.configurations.kafka.KafkaDetails;
 import org.pastebin.application.user_server.models.MessageTransactionModel;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -9,21 +10,20 @@ import org.springframework.stereotype.Service;
 public class MessageProducer {
     private final KafkaTemplate<String, MessageTransactionModel> saveKafkaTemplate;
     private final KafkaTemplate<String, String> deleteKafkaTemplate;
-    private final String KAFKA_SAVE_TOPIC;
-    private final String KAFKA_DELETE_TOPIC;
+    private final KafkaDetails kafkaDetails;
 
-    public MessageProducer(KafkaTemplate<String, MessageTransactionModel> saveKafkaTemplate, KafkaTemplate<String, String> deleteKafkaTemplate, @Value("${kafka.topic.save}") String KAFKA_SAVE_TOPIC, @Value("${kafka.topic.delete}") String KAFKA_DELETE_TOPIC) {
+    @Autowired
+    public MessageProducer(KafkaTemplate<String, MessageTransactionModel> saveKafkaTemplate, KafkaTemplate<String, String> deleteKafkaTemplate, KafkaDetails kafkaDetails) {
         this.saveKafkaTemplate = saveKafkaTemplate;
         this.deleteKafkaTemplate = deleteKafkaTemplate;
-        this.KAFKA_SAVE_TOPIC = KAFKA_SAVE_TOPIC;
-        this.KAFKA_DELETE_TOPIC = KAFKA_DELETE_TOPIC;
+        this.kafkaDetails = kafkaDetails;
     }
 
     public void sendToSave(MessageTransactionModel message) {
-        saveKafkaTemplate.send(KAFKA_SAVE_TOPIC, message);
+        saveKafkaTemplate.send(kafkaDetails.getKAFKA_SAVE_TOPIC(), message);
     }
 
     public void sendToDelete(String messageHash) {
-        deleteKafkaTemplate.send(KAFKA_DELETE_TOPIC, messageHash);
+        deleteKafkaTemplate.send(kafkaDetails.getKAFKA_DELETE_TOPIC(), messageHash);
     }
 }
