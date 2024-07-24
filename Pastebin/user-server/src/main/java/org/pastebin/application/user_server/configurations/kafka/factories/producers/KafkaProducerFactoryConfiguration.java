@@ -1,4 +1,4 @@
-package org.pastebin.application.user_server.configurations.kafka.producer_factories;
+package org.pastebin.application.user_server.configurations.kafka.factories.producers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.producer.ProducerConfig;
