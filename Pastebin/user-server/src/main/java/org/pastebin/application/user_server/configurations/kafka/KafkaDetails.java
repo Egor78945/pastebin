@@ -10,13 +10,19 @@ import org.springframework.stereotype.Component;
 public class KafkaDetails {
     private final String KAFKA_SAVE_TOPIC;
     private final String KAFKA_DELETE_TOPIC;
+    private final String KAFKA_HASH_REQUEST_TOPIC;
+    private final String KAFKA_HASH_RESPONSE_TOPIC;
     private final String KAFKA_BOOTSTRAP;
 
     public KafkaDetails(@Value("${kafka.topic.save}") String KAFKA_SAVE_TOPIC,
                         @Value("${kafka.topic.delete}") String KAFKA_DELETE_TOPIC,
-                        @Value("${kafka.bootstrap}") String KAFKA_BOOTSTRAP) {
+                        @Value("${kafka.bootstrap}") String KAFKA_BOOTSTRAP,
+                        @Value("${kafka.topic.hash.request}") String KAFKA_HASH_REQUEST_TOPIC,
+                        @Value("${kafka.topic.hash.response}") String KAFKA_HASH_RESPONSE_TOPIC) {
         this.KAFKA_SAVE_TOPIC = KAFKA_SAVE_TOPIC;
         this.KAFKA_DELETE_TOPIC = KAFKA_DELETE_TOPIC;
+        this.KAFKA_HASH_REQUEST_TOPIC = KAFKA_HASH_REQUEST_TOPIC;
+        this.KAFKA_HASH_RESPONSE_TOPIC = KAFKA_HASH_RESPONSE_TOPIC;
         this.KAFKA_BOOTSTRAP = KAFKA_BOOTSTRAP;
     }
 
@@ -35,5 +41,13 @@ public class KafkaDetails {
 
     public String getKAFKA_BOOTSTRAP() {
         return KAFKA_BOOTSTRAP;
+    }
+
+    public String getKAFKA_HASH_REQUEST_TOPIC() {
+        return KAFKA_HASH_REQUEST_TOPIC;
+    }
+
+    public String getKAFKA_HASH_RESPONSE_TOPIC() {
+        return KAFKA_HASH_RESPONSE_TOPIC;
     }
 }

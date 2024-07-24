@@ -29,4 +29,18 @@ public class KafkaTopicConfiguration {
                 .name(kafkaDetails.getKAFKA_DELETE_TOPIC())
                 .build();
     }
+
+    @Bean
+    public NewTopic hashRequestTopic() {
+        return TopicBuilder
+                .name(kafkaDetails.getKAFKA_HASH_REQUEST_TOPIC())
+                .build();
+    }
+
+    @Bean
+    public NewTopic hashResponseTopic() {
+        return TopicBuilder
+                .name(kafkaDetails.getKAFKA_HASH_RESPONSE_TOPIC())
+                .build();
+    }
 }
