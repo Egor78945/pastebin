@@ -1,4 +1,4 @@
-package org.pastebin.application.message_db_server.configuration.kafka.factories.listener_containers;
+package org.pastebin.application.message_db_server.configuration.kafka.factories.consumers.containers;
 
 import org.pastebin.application.message_db_server.models.MessageTransactionModel;
 import org.springframework.context.annotation.Bean;
