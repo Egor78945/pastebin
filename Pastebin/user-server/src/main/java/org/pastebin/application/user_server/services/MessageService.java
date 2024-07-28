@@ -1,13 +1,13 @@
 package org.pastebin.application.user_server.services;
 
 import lombok.RequiredArgsConstructor;
-import org.pastebin.application.user_server.exceptions.MessageFormatException;
-import org.pastebin.application.user_server.exceptions.RequestCancelledException;
-import org.pastebin.application.user_server.models.MessageTransactionModel;
-import org.pastebin.application.user_server.services.kafka.producers.MessageProducer;
+import org.pastebin.application.user_server.exception.MessageFormatException;
+import org.pastebin.application.user_server.exception.RequestCancelledException;
+import org.pastebin.application.user_server.model.MessageTransactionModel;
+import org.pastebin.application.user_server.services.kafka.producer.MessageProducer;
 import org.pastebin.application.user_server.services.redis.RedisService;
 import org.pastebin.application.user_server.services.web_client.WebClientService;
-import org.pastebin.application.user_server.utils.validators.MessageValidator;
+import org.pastebin.application.user_server.util.validator.MessageValidator;
 import org.springframework.stereotype.Service;
 
 @Service
